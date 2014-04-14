@@ -516,9 +516,9 @@ var Select = View.extend({
         set(this, 'selection', A([selection]));
         return;
       }
-      this._selectionDidChangeMultiple();
+      Ember.run.scheduleOnce('afterRender', this, this._selectionDidChangeMultiple);
     } else {
-      this._selectionDidChangeSingle();
+      Ember.run.scheduleOnce('afterRender', this, this._selectionDidChangeSingle);
     }
   }),
 
