@@ -19,11 +19,6 @@
   var extendPrototypes  = QUnit.urlParams.extendprototypes;
   ENV['EXTEND_PROTOTYPES'] = !!extendPrototypes;
 
-  // Handle testing feature flags
-  QUnit.config.urlConfig.push({ id: 'enableallfeatures', label: "Enable All Features"});
-  var enableAllFeatures = QUnit.urlParams.enableallfeatures;
-  ENV['ENABLE_ALL_FEATURES'] = !!enableAllFeatures;
-
   // Don't worry about jQuery version
   ENV['FORCE_JQUERY'] = true;
 
@@ -32,13 +27,12 @@
     ENV['STUB_OBJECT_CREATE'] = !Object.create;
   }
 
-  ENV['EXPERIMENTAL_CONTROL_HELPER'] = true;
-
   EmberDev.distros = {
     spade:   'ember-spade.js',
     build:   'ember.js',
     prod:    'ember.prod.js',
-    runtime: 'ember-runtime.js'
+    runtime: 'ember-runtime.js',
+    min:     'ember.min.js'
   };
 
 

@@ -1,3 +1,14 @@
+packages/container
+packages/ember-metal
+packages/ember-runtime
+packages/ember-debug
+packages/ember-views
+packages/ember-extension-support
+packages/ember-testing
+packages/ember-handlebars-compiler
+packages/ember-handlebars
+packages/ember-routing
+packages/ember-application
 *.bpkg
 *.gem
 *.rbc
@@ -13,7 +24,6 @@ _yardoc
 assets
 assets/bpm_libs.js
 assets/bpm_styles.css
-bin/
 coverage
 dist
 docs/build
@@ -35,6 +45,6 @@ tmp.bpm
 tmp.spade
 tests/source
 node_modules
-.vagrant
 bundle/
 *~
+publish_to_bower/

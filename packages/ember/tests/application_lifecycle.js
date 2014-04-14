@@ -1,3 +1,12 @@
+requireModule('ember-metal');
+requireModule('ember-runtime');
+requireModule('ember-handlebars-compiler');
+requireModule('ember-handlebars');
+requireModule('ember-views');
+requireModule('ember-routing');
+requireModule('ember-application');
+requireModule('ember-extension-support');
+
 var App, container, router;
 
 module("Application Lifecycle", {
@@ -69,6 +78,43 @@ test("Resetting the application allows controller properties to be set when a ro
   equal(Ember.controllerFor(container, 'application').get('selectedMenuItem'), 'home');
 
   App.reset();
+
+  equal(Ember.controllerFor(container, 'home').get('selectedMenuItem'), null);
+  equal(Ember.controllerFor(container, 'application').get('selectedMenuItem'), null);
+});
+
+test("Destroying the application resets the router before the container is destroyed", function() {
+  App.Router.map(function() {
+    this.route('home', { path: '/' });
+  });
+
+  App.HomeRoute = Ember.Route.extend({
+    setupController: function() {
+      this.controllerFor('home').set('selectedMenuItem', 'home');
+    },
+    deactivate: function() {
+      this.controllerFor('home').set('selectedMenuItem', null);
+    }
+  });
+  App.ApplicationRoute = Ember.Route.extend({
+    setupController: function() {
+      this.controllerFor('application').set('selectedMenuItem', 'home');
+    },
+    deactivate: function() {
+      this.controllerFor('application').set('selectedMenuItem', null);
+    }
+  });
+
+  var router = container.lookup('router:main');
+
+  Ember.run(App, 'advanceReadiness');
+
+  handleURL('/');
+
+  equal(Ember.controllerFor(container, 'home').get('selectedMenuItem'), 'home');
+  equal(Ember.controllerFor(container, 'application').get('selectedMenuItem'), 'home');
+
+  Ember.run(App, 'destroy');
 
   equal(Ember.controllerFor(container, 'home').get('selectedMenuItem'), null);
   equal(Ember.controllerFor(container, 'application').get('selectedMenuItem'), null);
