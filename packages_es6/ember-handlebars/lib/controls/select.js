@@ -503,9 +503,9 @@ var Select = View.extend({
 
   _change: function() {
     if (get(this, 'multiple')) {
-      this._changeMultiple();
+      Ember.run.scheduleOnce('afterRender', this, this._changeMultiple);
     } else {
-      this._changeSingle();
+      Ember.run.scheduleOnce('afterRender', this, this._changeSingle);
     }
   },
 
